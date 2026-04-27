@@ -1,0 +1,153 @@
+.page {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.aktif {
+  display: flex;
+}
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(to bottom, pink, white);
+  touch-action: manipulation;
+}
+
+
+/* Page */
+.page {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.aktif {
+  display: flex;
+}
+
+/* Progress bar */
+.bar {
+  width: 70%;
+  height: 20px;
+  background: #eee;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  background: #ff4d6d;
+  transition: 0.2s;
+}
+
+#love-click {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.love-pop {
+  position: absolute;
+  font-size: 20px;
+  animation: pop 1s ease forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) translateY(-50px);
+    opacity: 0;
+  }
+}
+
+#tapBtn {
+  margin-top: 20px;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-family: 'Quicksand', sans-serif;
+
+  background: #ff4d6d;
+  color: white;
+
+  border: 2px solid white;
+  border-radius: 30px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* efek hover (kalau PC) */
+#tapBtn:hover {
+  transform: scale(1.05);
+}
+
+/* efek dipencet */
+#tapBtn:active {
+  transform: scale(0.9);
+  background: #ff3355;
+}
+
+.polisi {
+  width: 120px;
+  margin: 20px 0;
+}
+
+.question-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 80%;
+  text-align: center;
+}
+
+#answers button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  border: none;
+  border-radius: 10px;
+  background: #ff4d6d;
+  color: white;
+  font-family: 'Quicksand';
+}
+
+#popupSalah {
+  display: none; /* default sembunyi */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000; /* pastikan di atas konten lain */
+}
+
+h2 {
+  color: #ff4d6d;
+}
+
+.judul-verif {
+  text-align: center;
+}
+

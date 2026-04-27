@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hadiah Untuk Kamu ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(to bottom, #ffc0cb, white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  text-align: center;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+    
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+        z-index: 2;
+              color:#ff4d6d;
+    }
+
+    h1 span {
+      color:#ff4d6d;
+      font-size: 36px; /* emoji lebih besar */
+        z-index: 2;
+    }
+
+    p {
+      font-size: 18px;
+      color:#ff4d6d ;
+      margin-bottom: 40px;
+        z-index: 2;
+    }
+    
+        p2 {
+      font-size: 10px;
+      color:black ;
+      margin-bottom: 40px;
+        z-index: 2;
+    }
+
+.button-container {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  
+  margin-top: 10px; /* kecilin jarak biar lebih ke atas */
+  
+  position: relative;
+  z-index: 2; /* lebih depan dari love */
+}
+
+.button-container button {
+  font-family: 'Quicksand', sans-serif; 
+  background: white;
+  border: 2px solid pink;
+  color: #ff4d6d;
+  
+  width: 250px;   /* samain lebar */
+  height: 50px;   /* samain tinggi */
+  
+  font-size: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.button-container button:active {
+  transform: scale(0.95); /* animasi klik kecil */
+}
+
+    button:active {
+      transform: scale(0.95);
+    }
+    
+    /* BACKGROUND EMOJI */
+#love-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* paling belakang */
+  pointer-events: none; /* biar ga ganggu klik */
+}
+
+
+.love {
+  position: absolute;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+  opacity: 0.4;
+
+  filter: blur(1.5px);
+  transform: scale(0.9);
+}
+
+/* Animasi naik */
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(-10vh);
+  }
+}
+  
+.bg-loop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-track img {
+  width: 100%;
+  height: auto; /* ⬅️ ini kunci utama */
+  display: block;
+}
+
+.bg-track {
+  position: absolute;
+  width: 100%;
+  height: auto;
+
+  animation: slideUp 30s linear infinite;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100vh); /* mulai dari bawah */
+  }
+  100% {
+    transform: translateY(-100%); /* sampai habis ke atas */
+  }
+}
+
+.box-tengah {
+      background: white;
+  width: 95%; /* bisa lo ubah */
+  height: 200px; /* bisa lo ubah */
+  margin: 50px auto;
+  border: 3px solid pink;
+  border-radius: 15px;
+  box-shadow: 0 0 15px pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    z-index: 2;
+}
+
+.isi-box {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.kiri, .kanan {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tengah {
+  width: 50%; /* ini ruang kosong tengah */
+}
+
+.kiri img, .kanan img {
+  width: 80%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border: 3px solid pink;
+  border-radius: 10px;
+      z-index: 2;
+}
+
+.tengah {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.love-img {
+  width: 80%;
+  max-width: 300px;
+}
+
+.box-jadian {
+    width: 95%; /* bisa lo ubah */
+  height: 200px; /* bisa lo ubah */
+  margin: 30px auto;
+  
+
+      background:white;
+  border: 3px solid pink;
+  border-radius: 15px;
+  box-shadow: 0 0 15px pink;
+
+  text-align: center;
+      z-index: 2;
+}
+
+.judul {
+  font-size: 16px;
+  color: #ff69b4;
+  margin-bottom: 5px;
+}
+
+.tanggal {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.hari {
+  font-size: 22px;
+  color: pink;
+  font-weight: bold;
+}
+
+.box-header {
+  width: 95%;
+  height: 300px;
+  margin: 20px auto;
+  padding: 20px;
+
+      background:  white;
+  border: 3px solid pink;
+  border-radius: 15px;
+  box-shadow: 0 0 15px pink;
+
+  text-align: center;
+  z-index: 2;
+
+  box-sizing: border-box; /* 🔥 ini kuncinya */
+}
+
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  overflow: hidden;
+
+  background: transparent; /* 🔥 ini kunci */
+}
+
+.door {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: white;
+  transition: transform 1s ease, box-shadow 0.5s;
+  z-index: 2;
+}
+
+/* kasih bayangan biar realistis */
+.door.left {
+  left: 0;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+}
+
+.door.right {
+  right: 0;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+}
+
+/* animasi buka */
+.open .left {
+  transform: translateX(-100%);
+}
+
+.open .right {
+  transform: translateX(100%);
+}
+
+/* tengah (love + teks) */
+.tap-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.love-icon {
+  font-size: 50px;
+  animation: pulse 1s infinite;
+}
+
+.tap-area p {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #ff4d6d;
+}
+
+/* animasi love */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+  </style>
+</head>
+<body>
+  
+  <div id="intro">
+  <div class="door left"></div>
+  <div class="door right"></div>
+
+  <div class="tap-area" onclick="bukaPintu()">
+    <div class="love-icon">❤️</div>
+    <p>tekan</p>
+  </div>
+</div>
+
+<div class="box-header">
+  <h1>Aku buatin ini buat kamu sayanggg</h1>
+  <p>Ayo lihat apa yang aku bikin</p>
+    <p2>scroll kebawah yaa</p2>
+</div>
+  
+
+<div class="box-tengah">
+  <div class="isi-box">
+    
+    <div class="kiri">
+      <img src="me.jpg" alt="kiri">
+    </div>
+
+<div class="tengah">
+  <img src="love.png" class="love-img">
+</div>
+
+    <div class="kanan">
+      <img src="you.jpg" alt="kanan">
+    </div>
+
+  </div>
+</div>
+
+<div class="box-jadian">
+  <p class="judul">Our story began on 💕</p>
+  <p class="tanggal">5 mei 2024</p>
+
+  <p class="hari" id="hari-jadian"></p>
+</div>
+
+<div class="button-container">
+  <button onclick="aksi(1)">Seberapa kamu Kenal aku</button>
+      <button onclick="aksi(4)">game tap tap </button>
+  <button onclick="aksi(2)">ulang tahun kamu</button>
+  <button onclick="aksi(3)">Scrapbook baru</button>
+
+</div>
+
+    <div id="love-container"></div>
+    
+<div class="bg-loop">
+  <div class="bg-track">
+    <img src="poto.png">
+    <img src="poto.png">
+  </div>
+</div>
+
+<audio id="bg-music" src="lagu1.mp3"></audio>
+<script>
+function aksi(nomor) {
+  if (nomor === 1) {
+    window.location.href = "game.html";
+  } else if (nomor === 2) {
+    window.location.href = "ultah.html";
+  } else if (nomor === 3) {
+    window.location.href = "scrapbook.html";
+  } else if (nomor === 4) {
+    window.location.href = "gametaptap.html";
+  }
+}
+    
+    const container = document.getElementById("love-container");
+
+/* Buat elemen random (love / sparkle) */
+function createElement() {
+  const el = document.createElement("div");
+
+  // tentuin jenis (lebih banyak love daripada sparkle)
+  const isLove = Math.random() > 0.3; // 70% love, 30% sparkle
+
+  el.classList.add("love");
+  el.innerText = isLove ? "❤️" : "✨" ;
+
+  // posisi random
+  el.style.left = Math.random() * 100 + "vw";
+
+  // ukuran beda
+  el.style.fontSize = (15 + Math.random() * 20) + "px";
+
+  // durasi beda (biar ga barengan)
+  el.style.animationDuration = (6 + Math.random() * 6) + "s";
+
+  // opacity beda
+  el.style.opacity = isLove ? 0.5 : 0.7;
+
+  container.appendChild(el);
+
+  // hapus setelah selesai
+  setTimeout(() => {
+    el.remove();
+  }, 10000);
+}
+
+/* Spawn terus */
+setInterval(createElement, 400);
+
+const startDate = new Date("2024-5-3"); // GANTI
+
+function updateHari() {
+  const sekarang = new Date();
+  const selisih = sekarang - startDate;
+  const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+
+  document.getElementById("hari-jadian").innerText =
+    hari + " days together";
+}
+
+updateHari();
+setInterval(updateHari, 60000);
+
+function bukaPintu() {
+  const intro = document.getElementById("intro");
+  const music = document.getElementById("bg-music");
+
+  // ▶️ play musik
+  music.play();
+
+  intro.classList.add("open");
+
+  // hilangin love + teks
+  const tap = document.querySelector(".tap-area");
+  tap.style.opacity = "0";
+
+  setTimeout(() => {
+    intro.style.display = "none";
+  }, 1000);
+}
+  </script>
+
+</body>
+</html>

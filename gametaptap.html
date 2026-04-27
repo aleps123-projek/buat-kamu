@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tap Aku</title>
+<style>
+  body {
+    background: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+  }
+
+  /* HEADER */
+.header {
+  text-align: center;
+  margin-top: 50px; /* lebih turun */
+}
+
+  h1 {
+    display: inline-block;
+    padding: 10px 20px;
+    background: white;
+    border: 3px solid pink;
+    border-radius: 10px;
+    color: pink;
+  }
+
+  /* SCORE KIRI */
+  #scoreBox {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    border: 3px solid pink;
+    border-radius: 10px;
+    background: white;
+    font-size: 18px;
+  }
+
+  .game-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+  }
+
+#character {
+  width: 80vw;
+  max-width: 400px;
+  height: auto;
+  cursor: pointer;
+
+  margin-top: 40px; /* geser ke bawah */
+}
+
+  /* POPUP */
+  #gameOver {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 3px solid pink;
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .sub {
+  margin-top: 8px;
+  color: gray;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+  <div id="scoreBox">Tap: 0</div>
+
+<div class="header">
+  <h1>Tap Aku</h1>
+  <p class="sub">Setiap 10 tap, game akan lebih cepat</p>
+</div>
+
+  <div class="game-area">
+    <img id="character" src="minggir.png">
+  </div>
+
+  <div id="gameOver" class="hidden">
+    <div class="popup">
+      <h2>GAME OVER</h2>
+      <button onclick="restartGame()">Main Lagi</button>
+    </div>
+  </div>
+
+  <!-- SOUND -->
+  <audio id="loseSound" src="tetot.mp3"></audio>
+  <audio id="tapSound" src="click.mp3"></audio>
+  <audio id="bgMusic" src="bg.mp3" loop></audio>
+
+<script>
+let score = 0;
+let highScore = localStorage.getItem("highScore") || 0; // ambil dari storage
+let isGameOver = false;
+let isLooking = false;
+let speedMultiplier = 1;
+
+const character = document.getElementById("character");
+const scoreText = document.getElementById("scoreBox");
+const gameOverDiv = document.getElementById("gameOver");
+const loseSound = document.getElementById("loseSound");
+const tapSound = document.getElementById("tapSound");
+const bgMusic = document.getElementById("bgMusic");
+
+// tampilkan high score awal
+scoreText.innerText = "Tap: 0 | Best: " + highScore;
+
+// biar backsound mulai pas pertama klik
+let musicStarted = false;
+
+// TAP
+character.addEventListener("click", () => {
+  if (isGameOver) return;
+
+  if (!musicStarted) {
+    bgMusic.volume = 1.0;
+    bgMusic.play();
+    musicStarted = true;
+  }
+
+  tapSound.currentTime = 0;
+  tapSound.play();
+
+  if (isLooking) {
+    // ❌ KALAH
+    isGameOver = true;
+    loseSound.play();
+
+    // cek high score
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore);
+    }
+
+    setTimeout(() => {
+      gameOverDiv.classList.remove("hidden");
+    }, 3000);
+
+  } else {
+    // ✅ TAMBAH SCORE
+    score++;
+    scoreText.innerText = "Tap: " + score + " | Best: " + highScore;
+
+    // ⚡ tiap 10 tap makin cepat
+    if (score % 10 === 0) {
+      speedMultiplier += 0.2;
+    }
+  }
+});
+
+// RANDOM NENGOK
+function randomLook() {
+  if (isGameOver) return;
+
+  let delay = (Math.random() * 3000 + 1000) / speedMultiplier;
+
+  setTimeout(() => {
+    if (isGameOver) return;
+
+    isLooking = true;
+    character.src = "nengok.png";
+
+    let lookDuration = (Math.random() * 1000 + 500) / speedMultiplier;
+
+    setTimeout(() => {
+      if (isGameOver) return;
+
+      isLooking = false;
+      character.src = "minggir.png";
+
+      randomLook();
+    }, lookDuration);
+
+  }, delay);
+}
+
+// RESTART
+function restartGame() {
+  score = 0;
+  isGameOver = false;
+  isLooking = false;
+  speedMultiplier = 1;
+
+  scoreText.innerText = "Tap: 0 | Best: " + highScore;
+  character.src = "minggir.png";
+
+  gameOverDiv.classList.add("hidden");
+
+  randomLook();
+}
+
+// START
+randomLook();
+</script>
+</body>
+</html>

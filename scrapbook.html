@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scrapbook</title>
+
+<style>
+  body {
+    margin: 0;
+    background: white;
+    font-family: Arial, sans-serif;
+    height: 400vh;
+  }
+
+  .box {
+    width: 80%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border: 3px solid pink;
+    border-radius: 15px;
+    box-shadow: 0 0 15px pink;
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 1s ease;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color:#ff4d6d;
+  }
+
+  .show-top {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .from-bottom {
+    transform: translateY(100px);
+  }
+
+  .show-bottom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* tombol */
+  button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background: pink;
+    cursor: pointer;
+  }
+
+  /* scroll icon */
+  .scroll-icon {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 65%;
+    width: 50px;
+    opacity: 0.8;
+    animation: upDown 1.2s infinite;
+  }
+
+  @keyframes upDown {
+    0% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 15px); }
+    100% { transform: translate(-50%, 0); }
+  }
+
+  .hide {
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- BOX 1 -->
+<div class="box" id="box1">
+  <h2>Who is my girlfriend?</h2>
+</div>
+
+<img src="scroll.png" class="scroll-icon" id="scrollIcon">
+
+<!-- GF -->
+<div class="box from-bottom" id="box2">
+  <img src="gf.png">
+</div>
+
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    pilih dan play lagu buat nemenin kamu
+  </p>
+
+  <h2 id="songTitle">Song 1</h2>
+
+  <button onclick="playMusic()">▶ Play</button>
+  <button onclick="nextMusic()">⏭ Next</button>
+
+  <audio id="audio"></audio>
+</div>
+
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    dah siap salting belomm? hehe
+  </p>
+
+</div>
+
+<!-- 5 IMAGE BOX -->
+<div class="box from-bottom"><img src="scrap1.png"></div>
+
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    gimana keadaan kamu?,pasti lgi senyum senyum
+  </p>
+
+</div>
+<div class="box from-bottom"><img src="scrap2.png"></div>
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    ayo di scroll lagi masih jauh ini
+  </p>
+  
+  
+</div>
+<div class="box from-bottom"><img src="scrap3.png"></div>
+
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    mulut kmu pasti pegel senyum terlalu lebar
+  </p>
+</div>
+
+<div class="box from-bottom"><img src="scrap4.png"></div>
+
+<div class="box from-bottom"><img src="scrap2.png"></div>
+
+
+
+<div class="box from-bottom"><img src="scrap5.png"></div>
+<div class="box from-bottom"><img src="scrap6.png"></div>
+
+<div class="box from-bottom" id="musicBox">
+  <p style="margin-bottom:10px; color:#ff4d6d;">
+    yeaayyyy udaaaa,ayo liat yg lain
+  </p>
+</div>
+
+
+<script>
+  const boxes = document.querySelectorAll(".box");
+  const audio = document.getElementById("audio");
+
+  const songs = [
+    {src: "lagu1.mp3", title: "Song 1"},
+    {src: "lagu2.mp3", title: "Song 2"},
+    {src: "lagu3.mp3", title: "Song 3"}
+  ];
+
+  let currentSong = 0;
+
+  function loadSong() {
+    audio.src = songs[currentSong].src;
+    document.getElementById("songTitle").innerText = songs[currentSong].title;
+  }
+
+  function playMusic() {
+    audio.play();
+  }
+
+  function nextMusic() {
+    currentSong++;
+    if (currentSong >= songs.length) currentSong = 0;
+    loadSong();
+    audio.play();
+  }
+
+  loadSong();
+
+  // animasi awal
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("box1").classList.add("show-top");
+    }, 300);
+  });
+
+  // animasi scroll semua box bawah
+  window.addEventListener("scroll", () => {
+    boxes.forEach(box => {
+      const position = box.getBoundingClientRect().top;
+      const screenHeight = window.innerHeight;
+
+      if (position < screenHeight - 100) {
+        box.classList.add("show-bottom");
+      }
+    });
+  });
+
+  // hide scroll icon
+  function hideScrollIcon() {
+    document.getElementById("scrollIcon").classList.add("hide");
+  }
+
+  document.addEventListener("touchstart", hideScrollIcon);
+  document.addEventListener("click", hideScrollIcon);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Kamu</title>
+
+<!-- Font Quicksand -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(to bottom, pink, white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Box utama */
+.container {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Judul */
+.title-box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    color: hotpink;
+    font-weight: bold;
+}
+
+/* Box soal */
+.quiz-box {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    min-height: 250px;
+}
+
+/* Soal */
+.question {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Jawaban gambar */
+.answers-img {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.answers-img img {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: 0.2s;
+}
+
+.answers-img img.selected {
+    border: 3px solid hotpink;
+    transform: scale(1.05);
+}
+
+/* Jawaban teks */
+.answers-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.answer-box {
+    border: 2px solid hotpink;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.answer-box.selected {
+    background: pink;
+}
+
+/* Tombol navigasi */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 10px;
+    background: hotpink;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hasil */
+.result {
+    font-size: 20px;
+    font-weight: bold;
+    color: hotpink;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="title-box">seberapa kamu kenal aku?</div>
+
+    <div class="quiz-box" id="quiz"></div>
+
+    <div class="nav">
+        <button onclick="prev()">⬅</button>
+        <button onclick="next()">➡</button>
+    </div>
+</div>
+
+<audio id="clickSound" src="click.mp3"></audio>
+<audio id="winSound" src="yeay.mp3"></audio>
+
+<script>
+let current = 0;
+
+const questions = [
+{
+    q: "apa makanan fav aku?",
+    type: "img",
+    options: ["mieayam.png","bakso.png","nasigoreng.png"],
+    answer: ["nasigoreng.png"]
+},
+{
+    q: "dimana kah aku sekolah?",
+    type: "text",
+    options: [
+        "sd sirnabaya1, mts Alfathimiyah, smk rosma",
+        "sd wadas, smp tj 2, smk cikini gada atap",
+        "sd sirnabaya 2, smp muhamadiyah, smk texar"
+    ],
+    answer: ["sd sirnabaya1, mts Alfathimiyah, smk rosma"]
+},
+{
+    q: "film apa yg aku sukain?",
+    type: "img",
+    options: ["cars.png","boboiboy.png","upinipin.png"],
+    answer: ["cars.png"]
+},
+{
+    q: "film genre apa yg aku sukain?",
+    type: "text",
+    options: ["animation","action","romance"],
+    answer: ["animation"]
+},
+{
+    q: "apa cita cita aku?",
+    type: "text",
+    options: ["pengen punya studio film","jadi animator","jadi 3D engineering"],
+    answer: ["pengen punya studio film"]
+},
+{
+    q: "apa yg paling aku sukain dalam kehidupan aku",
+    type: "text",
+    options: ["beraktivitas","belajar hal baru","makan dan tidur"],
+    answer: ["belajar hal baru"]
+},
+{
+    q: "warna favorit aku?",
+    type: "text",
+    options: ["hitam","biru","merah"],
+    answer: ["hitam"]
+},
+{
+    q: "hobi utama aku?",
+    type: "text",
+    options: ["main game","bikin animasi","olahraga"],
+    answer: ["bikin animasi"]
+},
+{
+    q: "waktu favorit aku buat produktif?",
+    type: "text",
+    options: ["pagi","siang","malam"],
+    answer: ["malam"]
+},
+{
+    q: "aku lebih suka kerja sendiri atau bareng tim?",
+    type: "text",
+    options: ["sendiri","bareng tim","tergantung"],
+    answer: ["sendiri"]
+}
+];
+
+// 🔥 FIX BUG array (biar ga nyambung semua index)
+let userAnswers = Array.from({length: questions.length}, () => []);
+
+const clickSound = document.getElementById("clickSound");
+const winSound = document.getElementById("winSound");
+
+function playClick(){
+    clickSound.currentTime = 0;
+    clickSound.play();
+}
+
+function render() {
+    let q = questions[current];
+    let html = `<div class="question">${q.q}</div>`;
+
+    if(q.type === "img"){
+        html += `<div class="answers-img">`;
+        q.options.forEach(opt=>{
+            let selected = userAnswers[current].includes(opt) ? "selected":"";
+            html += `<img src="${opt}" class="${selected}" onclick="select('${opt}')">`;
+        });
+        html += `</div>`;
+    } else {
+        html += `<div class="answers-text">`;
+        q.options.forEach(opt=>{
+            let selected = userAnswers[current].includes(opt) ? "selected":"";
+            html += `<div class="answer-box ${selected}" onclick="select('${opt}')">${opt}</div>`;
+        });
+        html += `</div>`;
+    }
+
+    document.getElementById("quiz").innerHTML = html;
+}
+
+function select(opt){
+    playClick(); // 🔊 klik jawaban
+
+    let q = questions[current];
+
+    if(q.answer.length > 1){
+        if(userAnswers[current].includes(opt)){
+            userAnswers[current] = userAnswers[current].filter(x=>x!==opt);
+        } else {
+            userAnswers[current].push(opt);
+        }
+    } else {
+        userAnswers[current] = [opt];
+    }
+
+    render();
+}
+
+function next(){
+    playClick(); // 🔊 klik tombol
+
+    if(current < questions.length - 1){
+        current++;
+        render();
+    } else {
+        showResult();
+    }
+}
+
+function prev(){
+    playClick(); // 🔊 klik tombol
+
+    if(current > 0){
+        current--;
+        render();
+    }
+}
+
+function showResult(){
+    let score = 0;
+
+    questions.forEach((q,i)=>{
+        let correct = [...q.answer].sort().toString();
+        let user = [...userAnswers[i]].sort().toString();
+        if(correct === user){
+            score++;
+        }
+    });
+
+    let percent = score * 10;
+
+    winSound.currentTime = 0;
+    winSound.play(); // 🎉 suara menang
+
+    document.getElementById("quiz").innerHTML = `
+        <div class="result">
+            hasil kamu: ${percent}%<br><br>
+            (${score} dari 10 benar)
+        </div>
+
+        <br>
+
+        <button onclick="goHome()">🏠 Kembali ke Home</button>
+    `;
+}
+
+function goHome(){
+    playClick(); // 🔊 klik tombol home
+    window.location.href = "halaman2.html";
+}
+
+render();
+</script>
+
+</body>
+</html>

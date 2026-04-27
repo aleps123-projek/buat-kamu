@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>❤️</title>
+ <link rel="stylesheet" href="style1.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ 
+ <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  
+
+<div id="loadingPage" class="page aktif">
+  <h2>Pencet aku terus ya 😆💖</h2>
+
+  <div class="bar">
+    <div id="progress"></div>
+  </div>
+
+  <p id="text">0%</p>
+
+  <button id="tapBtn">TAP 💖</button>
+
+  <div id="love-click"></div>
+</div>
+
+<!-- HALAMAN UTAMA -->
+<div id="mainPage" class="page">
+  <h2>Verifikasi selesai❤️</h2>
+  <h2>Kamu orang fix pacar aku 💖</h2>
+
+  <button id="nextBtn">Lanjut</button>
+</div>
+
+<script>
+// ======================
+// SOUND tombol lanjut
+// ======================
+const nextSound = new Audio("click.mp3");
+nextSound.volume = 0.5;
+
+const nextBtn = document.getElementById("nextBtn");
+nextBtn.onclick = () => {
+  // mainin sound
+  nextSound.currentTime = 0;
+  nextSound.play();
+
+  // pindah halaman
+  window.location.href = "halaman2.html";
+};
+</script>
+
+<style>
+#nextBtn {
+  background-color: #ff4d6d;
+  color: white;
+  border: 2px solid white;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s;
+}
+
+/* efek saat diklik */
+#nextBtn:active {
+  transform: scale(0.95);
+}
+</style>
+
+<!-- HALAMAN VERIFIKASI -->
+<div id="verifyPage" class="page">
+<h2 class="judul-verif">Verifikasi keamanan cinta terlebih dahulu 😏💖</h2>
+
+  <img src="polisi.png" class="polisi">
+
+  <div class="question-box">
+    <p id="questionText">Pertanyaan</p>
+
+    <div id="answers"></div>
+  </div>
+</div>
+
+<!-- POPUP SALAH -->
+<div id="popupSalah">
+  ❌ Jawaban salah!
+</div>
+
+  <script src="script2.js"></script>
+</body>
+</body>
+
+
+</html>
