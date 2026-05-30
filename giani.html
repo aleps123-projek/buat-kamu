@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scrapbook Cinta</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; overflow: hidden; }
+    .container {
+      display: flex;
+      width: 1600vw;
+      height: 100vh;
+      transition: transform 0.5s ease;
+    }
+    .page {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: rgba(255,255,255,0.8);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="book">
+    <div class="page"><img src="halaman1.png" style="max-width: 100vw; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman2.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman3.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman4.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman5.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman6.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman7.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman8.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman9.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman10.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman11.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman12.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman13.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman14.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman15.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+    <div class="page"><img src="halaman16.png" style="width: 100vw; height: auto; max-height: 100vh;" /></div>
+  </div>
+
+  <!-- AUDIO SECTION -->
+  <audio id="backsound2" src="perempuanku.mp3" loop></audio>
+  <audio id="backsound3" src="happybirthday.mp3" loop></audio>
+  <audio id="lagucinta" src="salting.mp3" loop></audio>
+  <audio id="lagutengah" src="woisatusatu.mp3" loop></audio>
+  <audio id="backsound11" src="wideawake.mp3" loop></audio>
+  <audio id="backsound14" src="backsoundhalaman4.mp3" loop></audio>
+  <audio id="backsound15" src="maenbareng.mp3" loop></audio>
+  <audio id="backsound16" src="maenbareng.mp3" loop></audio>
+
+  <!-- TOMBOL -->
+  <div class="controls">
+    <button onclick="prevPage()">⬅️</button>
+    <button onclick="nextPage()">➡️</button>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    let currentPage = 0;
+    const totalPages = 16;
+    const book = document.getElementById('book');
+
+    function updatePage() {
+      book.style.transform = `translateX(-${currentPage * 100}vw)`;
+    }
+
+    function stopAllBacksounds() {
+      const bs = [
+        'backsound2', 'backsound3', 'lagucinta', 'lagutengah',
+        'backsound11', 'backsound14', 'backsound15', 'backsound16'
+      ];
+      bs.forEach(id => {
+        const audio = document.getElementById(id);
+        if (audio) audio.pause();
+      });
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        updatePage();
+        stopAllBacksounds();
+
+        if (currentPage === 1) document.getElementById('backsound2').play().catch(() => {});
+        if (currentPage === 2) document.getElementById('backsound3').play().catch(() => {});
+        if (currentPage >= 3 && currentPage <= 9) {
+          const lagu = document.getElementById('lagucinta');
+          if (lagu && lagu.paused) lagu.play().catch(() => {});
+        }
+        if (currentPage === 10) document.getElementById('lagutengah').play().catch(() => {});
+        if (currentPage >= 11 && currentPage <= 12) {
+          const tengah = document.getElementById('backsound11');
+          if (tengah && tengah.paused) tengah.play().catch(() => {});
+        }
+        if (currentPage === 13) document.getElementById('backsound14').play().catch(() => {});
+        if (currentPage === 14) document.getElementById('backsound15').play().catch(() => {});
+        if (currentPage === 15) document.getElementById('backsound16').play().catch(() => {});
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        updatePage();
+        stopAllBacksounds();
+
+        if (currentPage === 1) document.getElementById('backsound2').play().catch(() => {});
+        if (currentPage === 2) document.getElementById('backsound3').play().catch(() => {});
+        if (currentPage >= 3 && currentPage <= 9) {
+          const lagu = document.getElementById('lagucinta');
+          if (lagu && lagu.paused) lagu.play().catch(() => {});
+        }
+        if (currentPage === 10) document.getElementById('lagutengah').play().catch(() => {});
+        if (currentPage >= 11 && currentPage <= 12) {
+          const tengah = document.getElementById('backsound11');
+          if (tengah && tengah.paused) tengah.play().catch(() => {});
+        }
+        
+        if (currentPage === 13) document.getElementById('backsound14').play().catch(() => {});
+        if (currentPage === 14) document.getElementById('backsound15').play().catch(() => {});
+        if (currentPage === 15) document.getElementById('backsound16').play().catch(() => {});
+      }
+    }
+  </script>
+
+</body>
+</html>
